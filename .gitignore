@@ -1,0 +1,7 @@
+# Ne pas suivre node_modules
+node_modules/
+
+# Autres choses à ignorer si besoin :
+.env
+.DS_Store
+*.log
