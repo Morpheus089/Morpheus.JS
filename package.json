@@ -1,0 +1,24 @@
+{
+  "dependencies": {
+    "@discord-player/extractor": "^7.1.0",
+    "axios": "^1.8.3",
+    "bcrypt": "^5.1.1",
+    "bcryptjs": "^3.0.2",
+    "discord-backup": "^3.3.2",
+    "discord-player": "^7.1.0",
+    "discord.js": "^14.18.0",
+    "dotenv": "^16.5.0",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "express-session": "^1.18.1",
+    "ffmpeg-static": "^5.2.0",
+    "got": "^14.4.6",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.10.1",
+    "ngrok": "^5.0.0-beta.2",
+    "node-fetch": "^2.7.0",
+    "play-dl": "^1.9.7",
+    "puppeteer": "^24.4.0",
+    "superagent": "^10.2.0"
+  }
+}
