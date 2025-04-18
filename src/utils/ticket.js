@@ -9,45 +9,50 @@ module.exports = {
   commands: [
     {
       data: new SlashCommandBuilder()
-  .setName('installer-ticket')
-  .setDescription('Installe le système de ticket')
-  .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
+    .setName('installer-ticket')
+    .setDescription('Installe le système de ticket')
+    .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
 
-async execute(interaction) {
-  const embed = new EmbedBuilder()
-    .setTitle('📩 Bienvenue dans le Centre de Support')
-    .setColor(0x1F8B4C)
-    .setThumbnail('https://cdn-icons-png.flaticon.com/512/561/561127.png') // Tu peux changer l'URL pour un logo adapté à ton serveur
-    .setDescription(
-      `✨ Tu rencontres un souci ? Tu veux contribuer ou signaler un problème ?\n\n` +
-      `Utilise le menu ci-dessous pour ouvrir un ticket correspondant à ton besoin. Notre équipe sera ravie de t’aider 💬\n\n` +
-      `📌 **Catégories disponibles :**\n\n` +
-      `🎭 **RP** — Besoin d'aide pour une fiche ou pour ton RP ? C’est ici !\n` +
-      `🚨 **Triche** — Tu as repéré un comportement suspect ? Aide-nous à garder le serveur clean !\n` +
-      `💰 **Don** — Tu veux soutenir le serveur et participer à son évolution ? Merci à toi ❤️\n\n` +
-      `🛠️ Clique sur le bouton correspondant pour créer ton ticket.`
-    )
-    .setFooter({ text: 'Système de ticket - Assistance rapide et efficace ✨', iconURL: interaction.client.user.displayAvatarURL() })
-    .setTimestamp();
+  async execute(interaction) {
+    // Déclenche sans rien montrer publiquement
+    await interaction.deferReply({ ephemeral: true });
+    await interaction.deleteReply();
 
-  const row = new ActionRowBuilder().addComponents(
-    new ButtonBuilder()
-      .setCustomId('ticket_rp')
-      .setLabel('🎭 RP')
-      .setStyle(ButtonStyle.Primary),
-    new ButtonBuilder()
-      .setCustomId('ticket_triche')
-      .setLabel('🚨 Triche')
-      .setStyle(ButtonStyle.Danger),
-    new ButtonBuilder()
-      .setCustomId('ticket_don')
-      .setLabel('💰 Don')
-      .setStyle(ButtonStyle.Success)
-  );
+    const embed = new EmbedBuilder()
+      .setTitle('📩 Bienvenue dans le Centre de Support')
+      .setColor(0x1F8B4C)
+      .setThumbnail('https://cdn-icons-png.flaticon.com/512/561/561127.png')
+      .setDescription(
+        `✨ Tu rencontres un souci ? Tu veux contribuer ou signaler un problème ?\n\n` +
+        `Utilise le menu ci-dessous pour ouvrir un ticket correspondant à ton besoin. Notre équipe sera ravie de t’aider 💬\n\n` +
+        `📌 **Catégories disponibles :**\n\n` +
+        `🎭 **RP** — Besoin d'aide pour une fiche ou pour ton RP ? C’est ici !\n` +
+        `🚨 **Triche** — Tu as repéré un comportement suspect ? Aide-nous à garder le serveur clean !\n` +
+        `💰 **Don** — Tu veux soutenir le serveur et participer à son évolution ? Merci à toi ❤️\n\n` +
+        `🛠️ Clique sur le bouton correspondant pour créer ton ticket.`
+      )
+      .setFooter({ text: 'Système de ticket - Assistance rapide et efficace ✨', iconURL: interaction.client.user.displayAvatarURL() })
+      .setTimestamp();
 
-  await interaction.reply({ embeds: [embed], components: [row] });
-}
-    },
+    const row = new ActionRowBuilder().addComponents(
+      new ButtonBuilder()
+        .setCustomId('ticket_rp')
+        .setLabel('🎭 RP')
+        .setStyle(ButtonStyle.Primary),
+      new ButtonBuilder()
+        .setCustomId('ticket_triche')
+        .setLabel('🚨 Triche')
+        .setStyle(ButtonStyle.Danger),
+      new ButtonBuilder()
+        .setCustomId('ticket_don')
+        .setLabel('💰 Don')
+        .setStyle(ButtonStyle.Success)
+    );
+
+    // Envoie le message dans le salon
+    await interaction.channel.send({ embeds: [embed], components: [row] });
+  }
+},
     {
       data: new SlashCommandBuilder()
         .setName('fermer-ticket')

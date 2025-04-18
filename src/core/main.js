@@ -48,6 +48,7 @@ const niveau = require(path.join(modulesPath, 'xp.js'));
 const craft = require(path.join(modulesPath, 'craft.js'));
 const metier = require(path.join(modulesPath, 'metier.js'));
 const creature = require(path.join(modulesPath, 'creature.js'));
+const guilde = require(path.join(modulesPath, 'guilde.js'));
 
 const moderation = require(path.join(utilsPath, 'moderation.js'));
 const building = require(path.join(utilsPath, 'build.js'));
@@ -70,6 +71,7 @@ const allCommands = [
   ...save_serveur.commands,
   ...ticket.commands,
   ...help.commands,
+  ...guilde.commands
 ];
 
 // === Filtrage et enregistrement des commandes ===

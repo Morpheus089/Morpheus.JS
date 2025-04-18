@@ -6,7 +6,7 @@ const commandXpMapping = {
     "67c35755fa2680612de53baa": ["solde"] //fermier
 };
 
-const XP_CHANNEL_ID = "1344473910514552872"; // Remplace par l'ID du salon où envoyer les notifications
+const XP_CHANNEL_ID = "1351493384988262503"; // Remplace par l'ID du salon où envoyer les notifications
 
 async function ajouterXpMetier(userId, metierId, xpGagne, guild) {
     let utilisateur = await MetierUtilisateur.findOne({ userId });

@@ -1,13 +1,39 @@
 const { ChannelType, PermissionFlagsBits, Events, EmbedBuilder } = require('discord.js');
-const ticket = require('../utils/ticket');
+const ticketSystem = require('../utils/ticket'); // Assure-toi que `ticketSystem.incrementTicketCounter()` existe bien
 
 module.exports = {
   name: Events.InteractionCreate,
-
   async execute(interaction) {
     if (!interaction.isButton()) return;
 
-    // Ignore tout bouton qui ne commence pas par "ticket_"
+    // --- Gestion des rôles réactifs ---
+    const roleButtons = {
+      role_farm: '1351324470484140103',
+      role_craft: '1351324670258839573',
+      role_rp: '1351325144743804968',
+      role_annonce: '1351325493433204807',
+      role_giveaway: '1351325612283003030',
+      role_update: '1351325967435563068',
+    };
+
+    if (roleButtons[interaction.customId]) {
+      const roleId = roleButtons[interaction.customId];
+      const role = interaction.guild.roles.cache.get(roleId);
+      const member = interaction.member;
+
+      if (!role) return;
+
+      if (member.roles.cache.has(roleId)) {
+        await member.roles.remove(role);
+        await interaction.reply({ content: `❌ Rôle retiré : ${role.name}`, ephemeral: true });
+      } else {
+        await member.roles.add(role);
+        await interaction.reply({ content: `✅ Rôle ajouté : ${role.name}`, ephemeral: true });
+      }
+      return;
+    }
+
+    // --- Gestion des tickets ---
     if (!interaction.customId.startsWith('ticket_')) return;
 
     const user = interaction.user;
@@ -21,8 +47,7 @@ module.exports = {
 
     const ticketNumber = ticketSystem.incrementTicketCounter();
     const channelName = `ticket-${user.username.toLowerCase()}-${ticketNumber}`;
-
-    const categoryId = '1358497887725551697';
+    const categoryId = '1358497887725551697'; // remplace avec l’ID de ta catégorie
 
     const channel = await interaction.guild.channels.create({
       name: channelName,

@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits, ChannelType, ActionRowBuilder, ButtonBuilder, ButtonStyle,  } = require('discord.js');
 const mongoose = require('mongoose');
 
 module.exports = {
@@ -200,6 +200,138 @@ module.exports = {
         // Envoi des deux embeds
         await interaction.reply({ embeds: [embed1, embed2] });
     }
+},
+
+{
+    data: new SlashCommandBuilder()
+    .setName('embed')
+    .setDescription('📨 Crée un embed personnalisé')
+    .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages)
+    .addStringOption(option =>
+      option.setName('titre')
+        .setDescription('Titre de l\'embed')
+        .setRequired(true))
+    .addStringOption(option =>
+      option.setName('description')
+        .setDescription('Description principale')
+        .setRequired(true))
+    .addStringOption(option =>
+      option.setName('couleur')
+        .setDescription('Couleur HEX ex: #00ffcc')
+        .setRequired(false))
+    .addStringOption(option =>
+      option.setName('image')
+        .setDescription('URL d’une image (facultatif)')
+        .setRequired(false))
+    .addStringOption(option =>
+      option.setName('thumbnail')
+        .setDescription('URL du thumbnail (facultatif)')
+        .setRequired(false))
+    .addStringOption(option =>
+      option.setName('footer')
+        .setDescription('Texte du pied de page')
+        .setRequired(false))
+    .addChannelOption(option =>
+      option.setName('salon')
+        .setDescription('Salon dans lequel envoyer l’embed')
+        .addChannelTypes(ChannelType.GuildText)
+        .setRequired(false)),
+
+  async execute(interaction) {
+    const titre = interaction.options.getString('titre');
+    const description = interaction.options.getString('description');
+    const couleur = interaction.options.getString('couleur') || '#5b84ea';
+    const image = interaction.options.getString('image');
+    const thumbnail = interaction.options.getString('thumbnail');
+    const footer = interaction.options.getString('footer') || `Embed généré par ${interaction.user.username}`;
+    const salon = interaction.options.getChannel('salon');
+
+    const embed = new EmbedBuilder()
+      .setTitle(titre)
+      .setDescription(description)
+      .setColor(couleur.replace('#', ''))
+      .setFooter({ text: footer, iconURL: interaction.client.user.displayAvatarURL() })
+      .setTimestamp();
+
+    if (image) embed.setImage(image);
+    if (thumbnail) embed.setThumbnail(thumbnail);
+
+    if (salon) {
+      await salon.send({ embeds: [embed] });
+      await interaction.reply({ content: `✅ Embed envoyé dans ${salon}`, ephemeral: true });
+    } else {
+      await interaction.reply({ embeds: [embed], ephemeral: true });
+    }
+  }
+},
+
+{
+  data: new SlashCommandBuilder()
+  .setName('installer_role')
+  .setDescription('Installe le système de rôles personnalisés')
+  .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
+
+async execute(interaction) {
+  // Accuse réception de la commande sans envoyer de message visible
+  await interaction.deferReply({ ephemeral: true });
+
+  const embed = new EmbedBuilder()
+    .setColor('#8e44ad')
+    .setTitle('📜 𝑹𝒐̂𝒍𝒆𝒔 𝒑𝒆𝒓𝒔𝒐𝒏𝒏𝒂𝒍𝒊𝒔𝒂𝒃𝒍𝒆𝒔')
+    .setDescription(`
+Choisis les rôles qui t'intéressent pour recevoir les notifications ou proposer des interactions :
+
+> ⚒️ **Demande de Farm** : Pour aller récolter des ressources ou combattre.
+> 🔨 **Demande de Craft** : Besoin d’aide pour fabriquer un objet.
+> ✍️ **Demande RP** : Propose une session de RP.
+> ❗ **Mention Annonce** : Sois notifié lors des annonces importantes.
+> 🎊 **Mention Giveaway** : Reste informé des giveaways.
+> ⁉️ **Mention Mise à Jour** : Sois au courant des dernières mises à jour.
+
+_Utilise les boutons ci-dessous pour ajouter ou retirer les rôles._
+    `)
+    .setFooter({ text: 'Echoes Of Avalone • Choisis ton rôle ✨' })
+    .setThumbnail(interaction.client.user.displayAvatarURL());
+
+  const row = new ActionRowBuilder().addComponents(
+    new ButtonBuilder()
+      .setCustomId('role_farm')
+      .setLabel('⚒️ Farm')
+      .setStyle(ButtonStyle.Secondary),
+    new ButtonBuilder()
+      .setCustomId('role_craft')
+      .setLabel('🔨 Craft')
+      .setStyle(ButtonStyle.Secondary),
+    new ButtonBuilder()
+      .setCustomId('role_rp')
+      .setLabel('✍️ RP')
+      .setStyle(ButtonStyle.Secondary),
+    new ButtonBuilder()
+      .setCustomId('role_annonce')
+      .setLabel('❗ Annonce')
+      .setStyle(ButtonStyle.Secondary),
+    new ButtonBuilder()
+      .setCustomId('role_giveaway')
+      .setLabel('🎊 Giveaway')
+      .setStyle(ButtonStyle.Secondary)
+  );
+
+  const row2 = new ActionRowBuilder().addComponents(
+    new ButtonBuilder()
+      .setCustomId('role_update')
+      .setLabel('⁉️ Mise à jour')
+      .setStyle(ButtonStyle.Secondary)
+  );
+
+  // Envoie le message dans le salon où la commande est utilisée
+  await interaction.channel.send({
+    embeds: [embed],
+    components: [row, row2],
+  });
+
+  // Supprime la réponse "en attente" de la commande
+  await interaction.deleteReply();
+}
 }
 
     ]
