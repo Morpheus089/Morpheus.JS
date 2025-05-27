@@ -1,6 +1,6 @@
 const { Events, EmbedBuilder } = require('discord.js');
-const Niveau = require('../../database/models/niveauModel');
-const Stats = require('../../database/models/statsModel');
+const Niveau = require('../database/models/niveauModel');
+const Stats = require('../database/models/statsModel');
 
 const allowedCategoryNames = [
     '🌲 𝐂anopée – Les hauteurs célestes',

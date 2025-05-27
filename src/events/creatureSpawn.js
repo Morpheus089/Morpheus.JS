@@ -1,5 +1,5 @@
 const { EmbedBuilder } = require('discord.js');
-const Creature = require('../../database/models/creatureModel');
+const Creature = require('../database/models/creatureModel');
 
 const allowedChannelNames = [
     '《⚙》𝐓est-morpheus'

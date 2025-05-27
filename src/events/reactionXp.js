@@ -1,5 +1,5 @@
 const { Events } = require('discord.js');
-const Niveau = require('../../database/models/niveauModel');
+const Niveau = require('../database/models/niveauModel');
 
 
 const allowedCategoryNames = [

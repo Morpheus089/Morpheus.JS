@@ -1,5 +1,5 @@
 const { Events, EmbedBuilder } = require('discord.js');
-const MetierUtilisateur = require('../../database/models/metierUtilisateurModel');
+const MetierUtilisateur = require('../database/models/metierUtilisateurModel');
 
 const commandXpMapping = {
     "67c35755fa2680612de53baa": ["solde"] // fermier
