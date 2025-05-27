@@ -1,76 +1,82 @@
 const { Events, EmbedBuilder } = require('discord.js');
-const Niveau = require('../database/models/niveauModel');
-const Stats = require('../database/models/statsModel');
+const Niveau = require('../../database/models/niveauModel');
+const Stats = require('../../database/models/statsModel');
 
+const allowedCategoryNames = [
+    '🌲 𝐂anopée – Les hauteurs célestes',
+    '🌳 𝐋e Cœur de l’Arbre – La cité vivante',
+    '🌿 𝐋e Tronc – Les profondeurs mystiques',
+    '🌱 𝐋es Racines – Les tunnels oubliés',
+    '🌿 𝐋a Clairière Sacrée – Hors du Grand Arbre',
 
-const allowedCategories = [
-    '1351994238099001515',
-    '1351995226784530543',
-    '1351996228963139678',
-    '1351996950458798230',
-    '1351997385831874591',
-    '1353046714541412452',
-    '1353050449497821265',
-    '1353054559462883370',
-    '1353059371168563200',
-    '1353060316631797882',
-    '1353061202502221895',
-    '1353080321955856454',
-    '1353081309630693527',
-    '1353081911882285147',
-    '1353082691729489951',
-    '1353083545987321926',
-    '1353083997294563359',
-    '1353084323825455254',
-    '1353313840737030154',
-    '1353314063622471701',
-    '1353314312940290078',
-    '1353314543505248276',
-    '1355835488908349531',
-    '1355835670672834621',
-    '1355835934255611925',
-    '1355836000907034774',
-    '1355836070394331297',
-    '1355849103837364234',
-    '1355849169369043044',
-    '1355849226944516208',
-    '1355849283156316170',
-    '1355849339544670228',
-    '1355849443781509261',
-    '1358739961515474974',
-    '1358740122308317294',
-    '1358740386436350122',
-    '1358740546570682458',
-    '1358740715529572352',
-    '1358740715529572352',
-    '1358740859377422529',
-    '1358741176642961538',
-    '1358741291982258187',
-    '1362093095478493334',
-    '1362094039289168143',
-    '1362094608431058984',
-    '1362095116524847335',
-    '1362095538538811412',
-    '1362095930068959232',
-    '1362096321695191090',
-    '1362096830506340563',
-    '1362096897971458208'
+    '🌌 𝐋a Haute Sphère – Les Domaines Divins',
+    '🏙 𝐀valone – La Capitale Céleste',
+    '🏘 𝐋es Quartiers Élémentaires – Vie et Culture',
+    '⏳ 𝐋e Quartier Mystique – Science et Exploration',
+    '🏗 𝐋es Cités Flottantes – Les Villes Secondaires',
+    '🌑 𝐋es Domaines Oubliés – Lieux Perdus dans l’Ombre',
+
+    '⛏ 𝐊azad’Mar – La Capitale du Roc',
+    '⚒ 𝐃urak’Thorn – La Cité des Forges',
+    '🏰 𝐁aldur’Dran – La Forteresse des Hautes Cimes',
+    '💎 𝐓horin’Dor – La Ville des Joyaux',
+
+    '🌋 𝐂haîne des Monts Brisés',
+    '🌊 𝐋a Rivière de Mithril',
+    '🌲 𝐅orêt des Racines-Profondes',
+
+    '👑 𝐕aldrith — Les Plaines Royales',
+    '🌲 𝐒ylvaren — La Frontière Verte',
+    '🌊 𝐀erinthys — Les Îles d\'Écume',
+    '🕯 𝐊erynthal — Le Voile Gris',
+
+    '🕷 𝐍yrth Kal — Le Cœur d\'Ébène',
+    '🦂 𝐔l\'Kalth — Les Fosses de Carcère',
+    '🐍 𝐕ael\'Sirith — Les Jardins Obscurs',
+    '⚙ 𝐓hrek\'Zhun — Le Creuset Silencieux',
+    '🦎 𝐄zzh\'Ryn — Les Marais du Serment Trahi',
+    '🩸 𝐕el’Drakhaal — Le Chant des Lamentations',
+    '🪞 𝐃rel’Nashaar — Le Miroir Tordu',
+    '🦴 𝐊ael’Morr — Les Landes Osseuses',
+    '🐜 𝐍zz’Khaal — Le Fief des Vermines',
+    '🔮 𝐘r’Kaenhal — Les Rêves Fêlés',
+    '🛕 𝐇ael’Zyn — Les Cloîtres de l’Inquisition',
+
+    '📚 𝐄nclave du Firmament',
+    '🌲𝐕allée des Rêves Éveillés',
+    '🌠 𝐌ontagnes d\'Étoilebrume',
+    '🍃 𝐅orêt de Voileargent',
+    '🌊 𝐑ivages d\'Opaline',
+    '🌩 𝐋andes des Songes Perdus',
+    '🌌 𝐏laines d’Auragivre',
+    '🌵 𝐃ésert d\'Éclipsia',
+    '🍂 𝐁ois des Murmures Ambrés',
+
+    '🏭 Drakhenor - Capitale Mécanique',
+    '🌋 Volcans d’Aetherflam',
+    '⚙ Vallée des Échos Métalliques',
+    '🏜 Désert d’Obsidiane',
+    '❄ Toundra de Ferbrume',
+    '🕳 Abysses de Noiracier',
+    '🌊 Rivages d\'Éthervapeur',
+    '🍁 Forêt d’Automnétoile',
+    '⚡ Plateaux d\'Oragivre'
+
 ];
 
 module.exports = {
     name: 'messageCreate',
     async execute(message) {
-    
-        if (message.author.bot || 
-            !message.channel.parent || 
-            !allowedCategories.includes(message.channel.parentId)
+        if (
+            message.author.bot ||
+            !message.channel.parent ||
+            !allowedCategoryNames.includes(message.channel.parent.name)
         ) return;
 
         const userId = message.author.id;
         const messageLength = message.content.length;
 
         try {
-            
             let niveau = await Niveau.findOne({ userId });
 
             if (!niveau) {
@@ -78,25 +84,35 @@ module.exports = {
                 await niveau.save();
             }
 
-            
             niveau.experience += messageLength;
 
-            
             if (niveau.experience >= niveau.experienceRequise) {
                 niveau.niveau++;
                 niveau.experience -= niveau.experienceRequise;
                 niveau.experienceRequise *= 2;
 
-                
                 let userStats = await Stats.findOne({ userId });
                 if (!userStats) {
-                    userStats = new Stats({ userId, statsBase: { force: 0, agilite: 0, vitesse: 0, intelligence: 0, dexterite: 0, vitalite: 0, charisme: 0, chance: 0 }, pointsADistribuer: 0 });
+                    userStats = new Stats({
+                        userId,
+                        statsBase: {
+                            force: 0,
+                            agilite: 0,
+                            vitesse: 0,
+                            intelligence: 0,
+                            dexterite: 0,
+                            vitalite: 0,
+                            charisme: 0,
+                            chance: 0
+                        },
+                        pointsADistribuer: 0
+                    });
                     await userStats.save();
                 }
+
                 userStats.pointsADistribuer += 5;
                 await userStats.save();
 
-            
                 const levelUpChannelId = process.env.LEVEL_UP_CHANNEL_ID;
                 let levelUpChannel;
 
@@ -110,18 +126,20 @@ module.exports = {
                     levelUpChannel = message.channel;
                 }
 
-
                 const levelUpEmbed = new EmbedBuilder()
                     .setColor('#FFD700')
                     .setTitle('🎉 **Niveau Supérieur !**')
                     .setDescription(`🆙 Félicitations <@${userId}> ! Tu viens de passer au niveau **${niveau.niveau}** ! 🎁 Tu gagnes **5** points à distribuer !`)
-                    .addFields(
-                        { name: '🔥 Continue comme ça !', value: 'Ta progression est impressionnante !' }
-                    )
+                    .addFields({
+                        name: '🔥 Continue comme ça !',
+                        value: 'Ta progression est impressionnante !'
+                    })
                     .setThumbnail(message.author.displayAvatarURL({ dynamic: true }))
                     .setTimestamp()
-                    .setFooter({ text: 'Système de Niveau', iconURL: message.guild ? message.guild.iconURL() : '' });
-
+                    .setFooter({
+                        text: 'Système de Niveau',
+                        iconURL: message.guild ? message.guild.iconURL() : ''
+                    });
 
                 levelUpChannel.send({ embeds: [levelUpEmbed] });
             }

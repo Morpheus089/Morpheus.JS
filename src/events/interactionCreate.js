@@ -1,5 +1,5 @@
 const { ChannelType, PermissionFlagsBits, Events, EmbedBuilder } = require('discord.js');
-const ticketSystem = require('../modules_mode/ticket');
+const ticketSystem = require('../../modules_mode/ticket');
 
 module.exports = {
   name: Events.InteractionCreate,

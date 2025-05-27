@@ -1,31 +1,34 @@
 const { EmbedBuilder } = require('discord.js');
-const Creature = require('../database/models/creatureModel');
+const Creature = require('../../database/models/creatureModel');
 
-
-const allowedChannels = [
-    '1345828925682745436'
+const allowedChannelNames = [
+    '《⚙》𝐓est-morpheus'
 ];
 
 module.exports = {
-    name: 'ready', 
+    name: 'ready',
     async execute(client) {
         console.log('[Event] Spawning des créatures activé !');
 
-        
         const intervalle = 2 * 60 * 1000;
 
         async function spawnCreature() {
             try {
-                
-                const channelId = allowedChannels[Math.floor(Math.random() * allowedChannels.length)];
-                const channel = await client.channels.fetch(channelId).catch(() => null);
 
-                if (!channel || channel.type !== 0) {
-                    console.warn(`[⚠️] Impossible d'envoyer une créature dans ${channelId}`);
+                const matchingChannels = client.channels.cache.filter(
+                    ch => ch.type === 0 && allowedChannelNames.includes(ch.name)
+                );
+
+                if (matchingChannels.size === 0) {
+                    console.warn('[⚠️] Aucun salon valide trouvé pour le spawn de créature.');
                     return;
                 }
 
-                
+
+                const channelArray = Array.from(matchingChannels.values());
+                const channel = channelArray[Math.floor(Math.random() * channelArray.length)];
+
+
                 const creature = await Creature.aggregate([{ $sample: { size: 1 } }]);
                 if (!creature || creature.length === 0) {
                     console.warn('[⚠️] Aucune créature trouvée dans la base de données.');
@@ -34,7 +37,7 @@ module.exports = {
 
                 const creatureData = creature[0];
 
-                
+
                 const embed = new EmbedBuilder()
                     .setTitle('⚔️ Une créature sauvage apparaît !')
                     .setDescription(`Une créature, **${creatureData.nom}**, est apparue ! Préparez-vous à l'affronter !`)
@@ -48,7 +51,6 @@ module.exports = {
                     .setColor(0x00FF00)
                     .setTimestamp();
 
-                
                 await channel.send({ embeds: [embed] });
                 console.log(`[✔️] Créature "${creatureData.nom}" apparue dans ${channel.name}`);
             } catch (error) {
@@ -56,7 +58,6 @@ module.exports = {
             }
         }
 
-        
         setInterval(spawnCreature, intervalle);
     }
 };
