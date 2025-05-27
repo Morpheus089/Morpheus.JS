@@ -1,29 +1,24 @@
-
-require('dotenv').config();
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '../config/.env') });
 
 const fs = require('fs');
-const path = require('path');
-const { Client, GatewayIntentBits, REST, Routes, Collection } = require('discord.js');
+const { Client, GatewayIntentBits, REST, Routes } = require('discord.js');
 const mongoose = require('mongoose');
-
 
 process.on('unhandledRejection', reason => console.error('⚠️ Rejection non gérée :', reason));
 process.on('uncaughtException', err => console.error('⚠️ Exception non gérée :', err));
 
-
-if (!fs.existsSync(path.join(__dirname, '../../.env'))) {
+if (!fs.existsSync(path.join(__dirname, '../config/.env'))) {
   console.warn('⚠️ .env introuvable ! Certaines variables peuvent manquer.');
 }
 if (!process.env.TOKEN) console.warn('⚠️ TOKEN manquant dans .env !');
 if (!process.env.MONGO_URI) console.warn('⚠️ URI MongoDB manquant dans .env !');
 
-
 if (process.env.MONGO_URI) {
   mongoose.connect(process.env.MONGO_URI)
-    .then(() => console.log('✅ Connecté à MongoDB'))
-    .catch(err => console.error('❌ Erreur MongoDB :', err));
+      .then(() => console.log('✅ Connecté à MongoDB'))
+      .catch(err => console.error('❌ Erreur MongoDB :', err));
 }
-
 
 const client = new Client({
   intents: [
@@ -38,19 +33,9 @@ const client = new Client({
 
 client.commands = new Map();
 
-
-const modulesPath = path.join(__dirname, '../modules');
 const modules_modPath = path.join(__dirname, '../modules_mode');
 
-const economie = require(path.join(modulesPath, 'economie.js'));
-const stats = require(path.join(modulesPath, 'stats.js'));
-const niveau = require(path.join(modulesPath, 'xp.js'));
-const craft = require(path.join(modulesPath, 'craft.js'));
-const metier = require(path.join(modulesPath, 'metier.js'));
-const creature = require(path.join(modulesPath, 'creature.js'));
-const guilde = require(path.join(modulesPath, 'guilde.js'));
-const classe = require(path.join(modulesPath, 'classe.js'));
-
+const commandesModules = require(path.join(__dirname, '../commande/commande.js'));
 const moderation = require(path.join(modules_modPath, 'moderation.js'));
 const building = require(path.join(modules_modPath, 'build.js'));
 const tupper = require(path.join(modules_modPath, 'tupper.js'));
@@ -58,29 +43,31 @@ const save_serveur = require(path.join(modules_modPath, 'save_serveur.js'));
 const ticket = require(path.join(modules_modPath, 'ticket.js'));
 const help = require(path.join(modules_modPath, 'help.js'));
 
-
 const allCommands = [
-  ...economie.commands,
-  ...stats.commands,
-  ...niveau.commands,
-  ...craft.commands,
-  ...metier.commands,
-  ...creature.commands,
+  ...commandesModules.commands,
   ...moderation.commands,
   ...building.commands,
   ...tupper.commands,
   ...save_serveur.commands,
   ...ticket.commands,
   ...help.commands,
-  ...guilde.commands,
-  ...classe.commands
 ];
 
+const commandMap = new Map();
+for (const cmd of allCommands) {
+  if (cmd?.data && typeof cmd.data.toJSON === 'function') {
+    const name = cmd.data.name;
+    if (!commandMap.has(name)) {
+      commandMap.set(name, cmd);
+    } else {
+      console.warn(`⚠️ Commande en double ignorée : ${name}`);
+    }
+  }
+}
 
-const validCommands = allCommands.filter(cmd => cmd?.data && typeof cmd.data.toJSON === 'function');
+const validCommands = Array.from(commandMap.values());
 const commands = validCommands.map(cmd => cmd.data.toJSON());
 client.commands = new Map(validCommands.map(cmd => [cmd.data.name, cmd]));
-
 
 client.once('ready', async () => {
   console.log(`✅ Connecté en tant que ${client.user.tag}`);
@@ -97,8 +84,8 @@ client.once('ready', async () => {
     console.log('🔄 Enregistrement des commandes...');
     for (const guildId of guildIds) {
       await rest.put(
-        Routes.applicationGuildCommands(process.env.CLIENT_ID, guildId),
-        { body: commands }
+          Routes.applicationGuildCommands(process.env.CLIENT_ID, guildId),
+          { body: commands }
       );
       console.log(`✅ Commandes enregistrées pour le serveur ${guildId}`);
     }
@@ -106,7 +93,6 @@ client.once('ready', async () => {
     console.error('❌ Erreur enregistrement des commandes :', error);
   }
 });
-
 
 client.on('interactionCreate', async interaction => {
   if (!interaction.isCommand()) return;
@@ -126,7 +112,6 @@ client.on('interactionCreate', async interaction => {
     }
   }
 });
-
 
 const eventsPath = path.join(__dirname, '../events');
 if (fs.existsSync(eventsPath)) {
@@ -148,11 +133,10 @@ if (fs.existsSync(eventsPath)) {
   console.warn('⚠️ Aucun dossier "events" trouvé.');
 }
 
-
 if (process.env.TOKEN) {
   client.login(process.env.TOKEN)
-    .then(() => console.log('✅ Bot connecté avec succès'))
-    .catch(err => console.error('❌ ERREUR connexion Discord :', err.message));
+      .then(() => console.log('✅ Bot connecté avec succès'))
+      .catch(err => console.error('❌ ERREUR connexion Discord :', err.message));
 } else {
   console.warn('⚠️ TOKEN manquant, connexion annulée.');
 }

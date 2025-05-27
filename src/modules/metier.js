@@ -1,11 +1,11 @@
 const { SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits } = require('discord.js');
 const mongoose = require('mongoose');
-const Recette = require('../database/models/recetteModel');
-const Metier = require('../database/models/metierModel.js');
-const MetierUtilisateur = require('../database/models/metierUtilisateurModel')
+const Recette = require('../src/database/models/recetteModel');
+const Metier = require('../src/database/models/metierModel.js');
+const MetierUtilisateur = require('../src/database/models/metierUtilisateurModel')
 
-const { createSuccessEmbed, createErrorEmbed } = require('../utils/embeds');
-const { parseRecettesString, validateRecettesExist, getUserMetierData } = require('../utils/metierUtils');
+const { createSuccessEmbed, createErrorEmbed } = require('../src/utils/embeds');
+const { parseRecettesString, validateRecettesExist, getUserMetierData } = require('../src/utils/metierUtils');
 
 module.exports = {
     commands: [

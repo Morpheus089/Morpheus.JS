@@ -1,18 +1,18 @@
 const { SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits } = require('discord.js');
 const mongoose = require('mongoose');
-const Recette = require('../database/models/recetteModel');
-const Ressource = require('../database/models/ressourceModel');
-const InventaireRessource = require('../database/models/inventaireRessourceModel');
-const Inventaire = require('../database/models/inventaireModel');
-const MetierUtilisateur = require('../database/models/metierUtilisateurModel');
-const Metier = require('../database/models/metierModel');
-const Item = require('../database/models/itemModel');
-const Equipement = require('../database/models/equipementModel');
+const Recette = require('../src/database/models/recetteModel');
+const Ressource = require('../src/database/models/ressourceModel');
+const InventaireRessource = require('../src/database/models/inventaireRessourceModel');
+const Inventaire = require('../src/database/models/inventaireModel');
+const MetierUtilisateur = require('../src/database/models/metierUtilisateurModel');
+const Metier = require('../src/database/models/metierModel');
+const Item = require('../src/database/models/itemModel');
+const Equipement = require('../src/database/models/equipementModel');
 
-const parseStats = require('../utils/parseStats');
-const { createSuccessEmbed, createErrorEmbed } = require('../utils/embeds');
-const { findRessource } = require('../utils/db');
-const { checkMetierAccess } = require('../utils/metier');
+const parseStats = require('../src/utils/parseStats');
+const { createSuccessEmbed, createErrorEmbed } = require('../src/utils/embeds');
+const { findRessource } = require('../src/utils/db');
+const { checkMetierAccess } = require('../src/utils/metier');
 
 module.exports = {
   commands: [

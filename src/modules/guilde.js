@@ -1,10 +1,10 @@
 const { SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const mongoose = require('mongoose');
-const Guilde = require('../database/models/guildeModel');
+const Guilde = require('../src/database/models/guildeModel');
 
 
-const { createSuccessEmbed, createErrorEmbed } = require('../utils/embeds');
-const { createGuildeEmbed } = require('../utils/guildeEmbeds');
+const { createSuccessEmbed, createErrorEmbed } = require('../src/utils/embeds');
+const { createGuildeEmbed } = require('../src/utils/guildeEmbeds');
 
 const {
   getGuildeByOwner,
@@ -14,15 +14,15 @@ const {
   isMember,
   isOwner,
   hasMemberSlot
-} = require('../utils/guildeUtils');
+} = require('../src/utils/guildeUtils');
 
 const {
   canJoinGuilde,
   canLeaveGuilde,
   canKickMember
-} = require('../utils/guildeChecks');
+} = require('../src/utils/guildeChecks');
 
-const { isAdmin } = require('../utils/permissions');
+const { isAdmin } = require('../src/utils/permissions');
 
 module.exports = {
     commands: [

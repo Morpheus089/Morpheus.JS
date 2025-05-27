@@ -1,15 +1,15 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
-const Stats = require('../database/models/statsModel');
-const Economie = require('../database/models/economieModel');
-const Item = require('../database/models/itemModel'); 
-const Marketplace = require('../database/models/marketplaceModel'); 
-const Inventaire = require('../database/models/inventaireModel') 
-const Equipement = require('../database/models/equipementModel'); 
+const Stats = require('../src/database/models/statsModel');
+const Economie = require('../src/database/models/economieModel');
+const Item = require('../src/database/models/itemModel');
+const Marketplace = require('../src/database/models/marketplaceModel');
+const Inventaire = require('../src/database/models/inventaireModel')
+const Equipement = require('../src/database/models/equipementModel');
 
-const { createSuccessEmbed, createErrorEmbed, createBalanceEmbed } = require('../utils/embeds');
-const { modifierSolde, deviseLabels } = require('../utils/devise');
-const { isAdmin } = require('../utils/permissions');
-const parseStats = require('../utils/parseStats');
+const { createSuccessEmbed, createErrorEmbed, createBalanceEmbed } = require('../src/utils/embeds');
+const { modifierSolde, deviseLabels } = require('../src/utils/devise');
+const { isAdmin } = require('../src/utils/permissions');
+const parseStats = require('../src/utils/parseStats');
 
 module.exports = {
     commands: [

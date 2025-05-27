@@ -1,10 +1,10 @@
 const { SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits } = require('discord.js');
-const Niveau = require('../database/models/niveauModel');
+const Niveau = require('../src/database/models/niveauModel');
 
-const generateProgressBar = require('../utils/progressBar');
-const calculerXpPourNiveau = require('../utils/xpCalcul');
-const { ajouterNiveaux, retirerNiveaux } = require('../utils/xpHandler');
-const { createErrorEmbed, createSuccessEmbed } = require('../utils/embeds');
+const generateProgressBar = require('../src/utils/progressBar');
+const calculerXpPourNiveau = require('../src/utils/xpCalcul');
+const { ajouterNiveaux, retirerNiveaux } = require('../src/utils/xpHandler');
+const { createErrorEmbed, createSuccessEmbed } = require('../src/utils/embeds');
 
 module.exports = {
     commands: [

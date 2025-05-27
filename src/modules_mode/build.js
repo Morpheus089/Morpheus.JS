@@ -1,5 +1,8 @@
-const { SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits, ChannelType, ActionRowBuilder, ButtonBuilder, ButtonStyle,  } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits, ChannelType, ActionRowBuilder, ButtonBuilder, ButtonStyle, AttachmentBuilder } = require('discord.js');
 const mongoose = require('mongoose');
+const puppeteer = require('puppeteer');
+const fs = require('fs');
+const path = require('path');
 
 module.exports = {
     commands: [

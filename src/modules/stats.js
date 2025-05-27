@@ -1,16 +1,16 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { PermissionFlagsBits } = require('discord-api-types/v10');
 const mongoose = require('mongoose');
-const Stats = require('../database/models/statsModel');
-const Equipement = require('../database/models/equipementModel');
-const Item = require('../database/models/itemModel');
+const Stats = require('../src/database/models/statsModel');
+const Equipement = require('../src/database/models/equipementModel');
+const Item = require('../src/database/models/itemModel');
 
-const { createErrorEmbed, createSuccessEmbed } = require('../utils/embeds');
+const { createErrorEmbed, createSuccessEmbed } = require('../src/utils/embeds');
 const {
   getOrCreateUserStats,
   getFormattedStatFields,
   calculateTotalStatsWithEquipement
-} = require('../utils/statsUtils');
+} = require('../src/utils/statsUtils');
 
 Equipement.schema.set('strictPopulate', false);
 

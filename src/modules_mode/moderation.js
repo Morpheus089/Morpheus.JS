@@ -175,7 +175,7 @@ module.exports = {
 
     await interaction.deferReply();
 
-    // 1) Recherche des résultats de recherche
+    
     const searchRes = await fetch(
       `https://fr.wikipedia.org/w/rest.php/v1/search/title?q=${encodeURIComponent(phrase)}&limit=5`
     );
@@ -188,7 +188,7 @@ module.exports = {
       });
     }
 
-    // 2) Si plusieurs résultats, proposer un menu de sélection
+    
     if (pages.length > 1) {
       const menu = new ActionRowBuilder().addComponents(
         new StringSelectMenuBuilder()
@@ -224,14 +224,14 @@ module.exports = {
       return handlePage(sel, sel.values[0], afficherComplet);
     }
 
-    // 3) Sinon, un seul résultat → directement afficher
+    
     return handlePage(interaction, pages[0].title, afficherComplet);
   }
 },
 
-// Gestion de l'affichage de la page Wikipédia
+
 async function handlePage(interaction, title, afficherComplet = false) {
-  // Récupérer le résumé
+  
   const res = await fetch(
     `https://fr.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`
   );
@@ -244,7 +244,7 @@ async function handlePage(interaction, title, afficherComplet = false) {
     });
   }
 
-  // Tronquer à 600 caractères max
+  
   let extrait = data.extract;
   if (extrait.length > 600) extrait = extrait.slice(0, 600) + '…';
 
@@ -259,7 +259,7 @@ async function handlePage(interaction, title, afficherComplet = false) {
   if (data.thumbnail) embed.setThumbnail(data.thumbnail.source);
   if (data.originalimage) embed.setImage(data.originalimage.source);
 
-  // Option contenu complet
+  
   if (afficherComplet) {
     const fullRes = await fetch(
       `https://fr.wikipedia.org/api/rest_v1/page/contents/${encodeURIComponent(title)}`
