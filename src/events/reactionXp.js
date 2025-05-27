@@ -2,7 +2,7 @@ const { Events } = require('discord.js');
 
 const Niveau = require('../database/models/niveauModel');
 
-// IDs des catégories autorisées
+
 const allowedCategories = [
     '1351994238099001515',
     '1351995226784530543',
@@ -61,7 +61,7 @@ const allowedCategories = [
 module.exports = {
     name: Events.MessageReactionAdd,
     async execute(reaction, user) {
-        // Assure le cache du message
+        
         if (reaction.partial) {
             try {
                 await reaction.fetch();
@@ -71,7 +71,7 @@ module.exports = {
             }
         }
 
-        // Vérifie si c'est dans la bonne catégorie
+        
         if (user.bot || 
             !reaction.message.channel.parent || 
             !allowedCategories.includes(reaction.message.channel.parentId)
@@ -80,7 +80,7 @@ module.exports = {
         const userId = reaction.message.author.id;
 
         try {
-            // On récupère le niveau de l'auteur du message ou on en crée un s'il n'existe pas
+            
             let niveau = await Niveau.findOne({ userId });
 
             if (!niveau) {
@@ -88,10 +88,10 @@ module.exports = {
                 await niveau.save();
             }
 
-            // On ajoute 10 XP pour la réaction
+            
             niveau.experience += 10;
 
-            // On vérifie si l'utilisateur a atteint le niveau supérieur
+            
             if (niveau.experience >= niveau.experienceRequise) {
                 niveau.niveau++;
                 niveau.experience -= niveau.experienceRequise;

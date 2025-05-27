@@ -1,4 +1,4 @@
- Base de donner Locale = mongodb://localhost:27017/Reve_des_infini
+Base de donner Locale = mongodb://localhost:27017/Reve_des_infini
 
 Base de donner en ligne VPS = mongodb://89.213.131.220:27017/bot_discord
 
@@ -6,7 +6,7 @@ Base de donner en ligne Atlas = mongodb+srv://admin:admin@cluster0.7hw0b.mongodb
 
 clée chat gpt : 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
 
-Token de morphée = MTM0MzU0MjUzMjQxNTY4ODc2NA.GLfVJw.tpEJL3kPs4AKlFps8TPcdCZOVMJxnhdSkwNM8I
+Token de morphée = MTM0MzU0MjUzMjQxNTY4ODc2NA.G_00l8.blvIo8gcuPoRhYTPxMjKw7v4zhlFyml4FTUM2Q
 
 Client ID de Morphée = 1343542532415688764
 

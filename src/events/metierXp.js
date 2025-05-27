@@ -1,12 +1,12 @@
 const { Events, EmbedBuilder } = require('discord.js');
 const MetierUtilisateur = require('../database/models/metierUtilisateurModel');
 
-// Définir manuellement les commandes associées à chaque métier
+
 const commandXpMapping = {
     "67c35755fa2680612de53baa": ["solde"] //fermier
 };
 
-const XP_CHANNEL_ID = "1351493384988262503"; // Remplace par l'ID du salon où envoyer les notifications
+const XP_CHANNEL_ID = "1351493384988262503";
 
 async function ajouterXpMetier(userId, metierId, xpGagne, guild) {
     let utilisateur = await MetierUtilisateur.findOne({ userId });
@@ -15,11 +15,11 @@ async function ajouterXpMetier(userId, metierId, xpGagne, guild) {
     let metierData = utilisateur.metiers.find(m => m.metierId.equals(metierId));
     if (!metierData) return;
 
-    // Ajouter l'XP
+    
     metierData.xp += xpGagne;
     let xpMax = 100 * metierData.niveau;
 
-    // Monter de niveau si l'XP dépasse le max
+    
     let niveauUp = false;
     while (metierData.xp >= xpMax) {
         metierData.xp -= xpMax;
@@ -30,7 +30,7 @@ async function ajouterXpMetier(userId, metierId, xpGagne, guild) {
 
     await utilisateur.save();
 
-    // Vérifier si le salon XP existe et envoyer la notification sous forme d'embed
+    
     const xpChannel = guild.channels.cache.get(XP_CHANNEL_ID);
     if (xpChannel) {
         const embed = new EmbedBuilder()
@@ -62,7 +62,7 @@ module.exports = {
 
         console.log(`🔍 Commande exécutée : ${commandName}`);
         
-        // Récupérer les métiers de l'utilisateur
+        
         let userMetier = await MetierUtilisateur.findOne({ userId });
         if (!userMetier) {
             console.log(`❌ L'utilisateur ${userId} n'a pas de métier enregistré.`);
@@ -74,11 +74,11 @@ module.exports = {
         for (let metier of userMetier.metiers) {
             const metierId = metier.metierId.toString();
             
-            // Vérifier si la commande est associée à ce métier
+            
             if (commandXpMapping[metierId] && commandXpMapping[metierId].includes(commandName)) {
                 console.log(`✅ L'utilisateur ${userId} gagne de l'XP pour la commande ${commandName}`);
                 
-                // Ajouter l'XP sans modifier la réponse de la commande
+                
                 await ajouterXpMetier(userId, metier.metierId, 10, guild);
                 return;
             }

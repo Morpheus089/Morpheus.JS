@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-// Schéma du Boss
+
 const BossSchema = new mongoose.Schema({
   nom: {
     type: String,
@@ -34,7 +34,7 @@ const BossSchema = new mongoose.Schema({
   }],
   drops: {
     ressources: [{
-      ressourceId: { type: mongoose.Schema.Types.ObjectId, ref: 'Ressource', required: true }, // Référence à Ressource
+      ressourceId: { type: mongoose.Schema.Types.ObjectId, ref: 'Ressource', required: true },
       quantite_min: { type: Number, required: true, min: 0 },
       quantite_max: { type: Number, required: true, min: 0 },
       probabilite: { type: Number, required: true, min: 0, max: 1 }
@@ -42,7 +42,7 @@ const BossSchema = new mongoose.Schema({
     honneur: { type: Number, required: true, min: 0 },
     xp: { type: Number, required: true, min: 0 },
     items: [{
-      itemId: { type: mongoose.Schema.Types.ObjectId, ref: 'Item', required: true }, // Référence à Item
+      itemId: { type: mongoose.Schema.Types.ObjectId, ref: 'Item', required: true },
       probabilite: { type: Number, required: true, min: 0, max: 1 }
     }]
   },

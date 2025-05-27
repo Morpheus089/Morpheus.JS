@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-const { Effect } = require('./effetModel'); // Importation du modèle Effect
+const { Effect } = require('./effetModel');
 
-// Définition du schéma pour une compétence d'attaque
+
 const AttackSkillSchema = new mongoose.Schema({
     name: { type: String, required: true },
     description: { type: String, required: true },
@@ -10,13 +10,13 @@ const AttackSkillSchema = new mongoose.Schema({
     energyCost: { type: Number, required: true },
     damage: { type: Number, required: true },
     accuracy: { type: Number, required: true },
-    cooldown: { type: Number, default: 0 }, // Temps de recharge en secondes
+    cooldown: { type: Number, default: 0 },
     
-    // Référence aux effets appliqués par cette attaque
+    
     effects: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Effect' }]
 });
 
-// Création du modèle AttackSkill
+
 const AttackSkill = mongoose.model('AttackSkill', AttackSkillSchema);
 
-module.exports = AttackSkill; // Exportation du modèle AttackSkill
+module.exports = AttackSkill;

@@ -4,7 +4,7 @@ module.exports = {
   name: Events.ClientReady,
   once: true,
   async execute(client) {
-    // === PARAMÈTRES À PERSONNALISER CI-DESSOUS ===
+
     const version = 'v0.0.0.1';
     const changements = [
       '✨ Premiere verssion de Morpheus.'];

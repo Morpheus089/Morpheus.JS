@@ -1,6 +1,6 @@
 const { WebhookClient, EmbedBuilder } = require('discord.js');
 
-// Webhook existant (même que celui du bienvenue si tu veux)
+
 const webhook = new WebhookClient({ url: 'https://discord.com/api/webhooks/1362108727087595831/cE4pSVweSlBwwaRrZA3f_3qOgSPWbGuO-4MA9-ZLuvlHkbc8E2hdRWOvRdyFZCJvueR4' });
 
 module.exports = {

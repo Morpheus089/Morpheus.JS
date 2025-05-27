@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 
 const GuildSchema = new mongoose.Schema({
     creator: {
-        type: String, // Stocke l'ID Discord en tant que chaîne
-        ref: 'User', // Référence à l'utilisateur qui a créé la guilde (si vous avez un modèle User qui utilise également des chaînes)
+        type: String,
+        ref: 'User',
         required: true
     },
     name: {
@@ -17,22 +17,22 @@ const GuildSchema = new mongoose.Schema({
         default: ''
     },
     type: {
-        type: String, // Classe de la guilde, libre d'accepter n'importe quelle valeur
+        type: String,
         required: true
     },
     level: {
         type: Number,
-        default: 1, // Niveau de la guilde commence à 1
+        default: 1,
         min: 1
     },
     buildingLevel: {
         type: Number,
-        default: 0, // Niveau du bâtiment de la guilde commence à 0
+        default: 0,
         min: 0
     },
     members: [{
         user: {
-            type: String, // Stocke l'ID Discord en tant que chaîne
+            type: String,
             ref: 'User'
         },
         rank: {
@@ -45,20 +45,20 @@ const GuildSchema = new mongoose.Schema({
             default: Date.now
         },
         position: {
-            type: String, // Poste spécifique dans la guilde
+            type: String,
             default: ''
         }
     }],
     subGuilds: [{ 
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Guild' // Liste des guildes qui font partie de cette guilde
+        ref: 'Guild'
     }],
     image: {
-        type: String, // URL ou chemin de l'image de la guilde
+        type: String,
         default: ''
     },
     activities: {
-        type: [String], // Liste des activités demandées dans la guilde
+        type: [String],
         default: []
     }
 }, { timestamps: true });

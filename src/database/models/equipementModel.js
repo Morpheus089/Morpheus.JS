@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const equipementSchema = new mongoose.Schema({
-  userId: { type: String, required: true, unique: true }, // ID du joueur
+  userId: { type: String, required: true, unique: true },
   equipement: {
     casque: { type: mongoose.Schema.Types.ObjectId, ref: 'Item', default: null },
     cuirasse: { type: mongoose.Schema.Types.ObjectId, ref: 'Item', default: null },
@@ -16,10 +16,10 @@ const equipementSchema = new mongoose.Schema({
     "arme D": { type: mongoose.Schema.Types.ObjectId, ref: 'Item', default: null },
     "arme G": { type: mongoose.Schema.Types.ObjectId, ref: 'Item', default: null }
   },
-  dateModification: { type: Date, default: Date.now } // Pour suivre les changements d'équipement
+  dateModification: { type: Date, default: Date.now }
 });
 
-// Créer le modèle Equipement
+
 const Equipement = mongoose.model('Equipement', equipementSchema);
 
 module.exports = Equipement;

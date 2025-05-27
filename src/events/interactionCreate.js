@@ -1,12 +1,12 @@
 const { ChannelType, PermissionFlagsBits, Events, EmbedBuilder } = require('discord.js');
-const ticketSystem = require('../utils/ticket'); // Assure-toi que `ticketSystem.incrementTicketCounter()` existe bien
+const ticketSystem = require('../modules_mode/ticket');
 
 module.exports = {
   name: Events.InteractionCreate,
   async execute(interaction) {
     if (!interaction.isButton()) return;
 
-    // --- Gestion des rôles réactifs ---
+
     const roleButtons = {
       role_farm: '1351324470484140103',
       role_craft: '1351324670258839573',
@@ -33,7 +33,7 @@ module.exports = {
       return;
     }
 
-    // --- Gestion des tickets ---
+
     if (!interaction.customId.startsWith('ticket_')) return;
 
     const user = interaction.user;
@@ -47,7 +47,7 @@ module.exports = {
 
     const ticketNumber = ticketSystem.incrementTicketCounter();
     const channelName = `ticket-${user.username.toLowerCase()}-${ticketNumber}`;
-    const categoryId = '1358497887725551697'; // remplace avec l’ID de ta catégorie
+    const categoryId = '1358497887725551697';
 
     const channel = await interaction.guild.channels.create({
       name: channelName,

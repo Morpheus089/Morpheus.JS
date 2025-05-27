@@ -33,7 +33,7 @@ const CreatureSchema = new mongoose.Schema({
   }],
   drops: {
     ressources: [{
-      ressourceId: { type: mongoose.Schema.Types.ObjectId, ref: 'Ressource', required: true }, // Référence à la ressource
+      ressourceId: { type: mongoose.Schema.Types.ObjectId, ref: 'Ressource', required: true },
       quantite_min: { type: Number, required: true, min: 0 },
       quantite_max: { type: Number, required: true, min: 0 },
       probabilite: { type: Number, required: true, min: 0, max: 1 }

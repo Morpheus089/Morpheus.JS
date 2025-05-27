@@ -7,14 +7,14 @@ module.exports = {
    * @param {import('discord.js').GuildMember} newMember 
    */
   async execute(oldMember, newMember) {
-    // On ne fait rien si ce n'est pas un nouveau boost
+
     if (oldMember.premiumSince || !newMember.premiumSince) return;
 
-    // Choisis ton salon de Boost (ici on cherche par nom "boosts")
+    
     const channel = newMember.guild.channels.cache.get('1351487918124040253');
-    if (!channel) return; // si salon introuvable, on stop
+    if (!channel) return; 
 
-    // Construction de l'embed ultra stylé
+    
     const boostEmbed = new EmbedBuilder()
       .setColor('#ffd700')
       .setTitle(`🚀 𓆩༺ 𝐍𝐨𝐮𝐯𝐞𝐚𝐮 𝐁𝐨𝐨𝐬𝐭𝐞𝐮𝐫 ! ༻𓆪`)
@@ -33,7 +33,7 @@ module.exports = {
 🌟 **Total de boosts :** ${newMember.guild.premiumSubscriptionCount}
       `)
       .setThumbnail(newMember.user.displayAvatarURL({ dynamic: true }))
-      // Remplace l’URL ci‑dessous par ta bannière de boost fantasy
+      
       .setImage('https://zupimages.net/up/25/16/acz2.gif') 
       .setFooter({
         text: 'Echoes Of Avalone • Merci pour le boost !',
@@ -41,7 +41,7 @@ module.exports = {
       })
       .setTimestamp();
 
-    // Envoi de l'embed dans le salon
+    
     await channel.send({ embeds: [boostEmbed] });
   }
 };

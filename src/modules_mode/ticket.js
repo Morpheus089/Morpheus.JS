@@ -2,7 +2,6 @@ const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, Butt
 const mongoose = require('mongoose');
 const fetch = require('node-fetch');
 
-// Compteur temporaire (remis à 0 au redémarrage)
 let ticketCounter = 0;
 
 module.exports = {
@@ -14,7 +13,7 @@ module.exports = {
     .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
 
   async execute(interaction) {
-    // Déclenche sans rien montrer publiquement
+
     await interaction.deferReply({ ephemeral: true });
     await interaction.deleteReply();
 
@@ -49,7 +48,6 @@ module.exports = {
         .setStyle(ButtonStyle.Success)
     );
 
-    // Envoie le message dans le salon
     await interaction.channel.send({ embeds: [embed], components: [row] });
   }
 },
@@ -73,7 +71,7 @@ module.exports = {
     }
   ],
 
-  // Export ticketCounter functions
+  
   getTicketCounter: () => ticketCounter,
   incrementTicketCounter: () => ++ticketCounter,
 };

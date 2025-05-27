@@ -11,7 +11,7 @@ module.exports = {
                     
                     async execute(interaction) {
                         const totalChannels = interaction.guild.channels.cache.size;
-                        const maxChannels = 500; // Limite imposée par Discord
+                        const maxChannels = 500;
                         const remainingChannels = maxChannels - totalChannels;
         
                         const embed = new EmbedBuilder()
@@ -41,7 +41,7 @@ module.exports = {
                 .setRequired(true)),
 
     async execute(interaction) {
-        await interaction.deferReply(); // ⚠️ Indique que le bot répondra plus tard
+        await interaction.deferReply();
 
         const categoryName = interaction.options.getString('categorie');
         const channelsInput = interaction.options.getString('salons');
@@ -72,7 +72,7 @@ module.exports = {
             )
             .setFooter({ text: `Commande exécutée par ${interaction.user.tag}` });
         
-        await interaction.editReply({ embeds: [embed] }); // ⚠️ On utilise editReply ici
+        await interaction.editReply({ embeds: [embed] });
     }
 },
 
@@ -132,7 +132,6 @@ module.exports = {
     async execute(interaction) {
         const guild = interaction.guild;
 
-        // Informations de base sur le serveur
         const serverName = guild.name || 'Aucun nom disponible';
         const serverId = guild.id || 'Aucun ID disponible';
         const serverOwner = await guild.fetchOwner();
@@ -150,7 +149,7 @@ module.exports = {
         const description = guild.description || 'Aucune description disponible';
         const vanityURL = guild.vanityURLCode || 'Pas de vanity URL';
         const afkChannel = guild.afkChannel || 'Aucun salon AFK';
-        const afkTimeout = guild.afkTimeout ? guild.afkTimeout / 60 : 0; // En minutes
+        const afkTimeout = guild.afkTimeout ? guild.afkTimeout / 60 : 0;
         const systemChannel = guild.systemChannel ? guild.systemChannel.name : 'Aucun canal système';
         const isWidgetEnabled = guild.widgetEnabled;
 
@@ -163,12 +162,12 @@ module.exports = {
             widgetUrl = 'Widget désactivé';
         }
 
-        // Partie 1 de l'embed
+
         const embed1 = new EmbedBuilder()
             .setTitle(`📊 Informations détaillées du serveur ${serverName}`)
             .setColor("Blue");
 
-        // Ajout des champs dans embed1
+
         embed1.addFields(
             { name: "🏷 Nom du serveur", value: `${serverName}`, inline: true },
             { name: "🆔 ID du serveur", value: `${serverId}`, inline: true },
@@ -180,11 +179,11 @@ module.exports = {
             { name: "🔗 Niveau de boost", value: `Niveau ${premiumTier} avec ${premiumSubscriptionCount} boosts`, inline: true }
         );
 
-        // Partie 2 de l'embed
+
         const embed2 = new EmbedBuilder()
             .setColor("Blue");
 
-        // Ajout des champs dans embed2
+
         embed2.addFields(
             { name: "🖼 Icône du serveur", value: iconUrl, inline: false },
             { name: "🖼 Bannière du serveur", value: bannerUrl, inline: false },
@@ -197,7 +196,7 @@ module.exports = {
             { name: "📊 URL du widget", value: widgetUrl, inline: true }
         );
 
-        // Envoi des deux embeds
+
         await interaction.reply({ embeds: [embed1, embed2] });
     }
 },
@@ -272,7 +271,7 @@ module.exports = {
   .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
 
 async execute(interaction) {
-  // Accuse réception de la commande sans envoyer de message visible
+
   await interaction.deferReply({ ephemeral: true });
 
   const embed = new EmbedBuilder()
@@ -323,13 +322,13 @@ _Utilise les boutons ci-dessous pour ajouter ou retirer les rôles._
       .setStyle(ButtonStyle.Secondary)
   );
 
-  // Envoie le message dans le salon où la commande est utilisée
+
   await interaction.channel.send({
     embeds: [embed],
     components: [row, row2],
   });
 
-  // Supprime la réponse "en attente" de la commande
+
   await interaction.deleteReply();
 }
 }

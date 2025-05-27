@@ -10,7 +10,7 @@ const niveauSchema = new mongoose.Schema({
     updatedAt: { type: Date, default: Date.now }
 });
 
-// Middleware pour mettre à jour `updatedAt` à chaque modification
+
 niveauSchema.pre('save', function (next) {
     this.updatedAt = Date.now();
     next();

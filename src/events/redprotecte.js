@@ -13,16 +13,16 @@ const {
     async execute(member) {
       const client = member.client;
   
-      // ─── 🎭 Check si c’est un BOT ───────────────────────────────
+
       if (member.user.bot) {
         await member.roles.add(['1351322344643235850', '1351321201401659392']);
         return;
       }
   
-      // ─── 🕊️ Rôles de pré-accueil ───────────────────────────────
+
       await member.roles.add(['1351328204056563824', '1351328026398429317']);
   
-      // ─── 🔮 Embed RP RedProtecte ───────────────────────────────
+
       const protecteEmbed = new EmbedBuilder()
         .setColor('#d41e6c')
         .setTitle('🕯️ 𓆩༺ 𝑹𝒊𝒕𝒖𝒆𝒍 𝒅’𝑨𝒄𝒄𝒆̀𝒔 : 𝑹𝒆𝒅 𝑷𝒓𝒐𝒕𝒆𝒄𝒕𝒆 ༻𓆪')
@@ -45,7 +45,7 @@ const {
           iconURL: client.user.displayAvatarURL(),
         });
   
-      // ─── 🪬 Bouton d’acceptation ───────────────────────────────
+
       const validateButton = new ButtonBuilder()
         .setCustomId(`red_protecte_validate_${member.id}`)
         .setLabel('🔓 Briser le Sceau')
@@ -60,10 +60,10 @@ const {
           components: [row],
         });
   
-        // ─── 🎯 Attente de clic sur le bouton ─────────────────────
+
         const collector = dm.createMessageComponentCollector({
           componentType: ComponentType.Button,
-          time: 10 * 60 * 1000, // 10 minutes
+          time: 10 * 60 * 1000,
         });
   
         collector.on('collect', async (interaction) => {
@@ -71,7 +71,7 @@ const {
   
           await interaction.deferReply({ ephemeral: true });
   
-          // Rôles à donner après réussite
+
           const rolesToAdd = [
             '1351324078031507588',
             '1351323089010688084',

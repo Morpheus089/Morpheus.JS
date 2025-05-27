@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 
-// Schéma corrigé avec le nom en français
+
 const inventaireSchema = new mongoose.Schema({
-    userId: { type: String, required: true, unique: true }, // Identifiant du joueur
+    userId: { type: String, required: true, unique: true },
     items: [
         {
-            itemId: { type: mongoose.Schema.Types.ObjectId, ref: 'Item' }, // Référence à un item
-            quantity: { type: Number, default: 1 } // Quantité possédée
+            itemId: { type: mongoose.Schema.Types.ObjectId, ref: 'Item' }, 
+            quantity: { type: Number, default: 1 } 
         }
     ]
 });

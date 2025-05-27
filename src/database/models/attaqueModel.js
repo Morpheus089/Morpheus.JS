@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-const { Effect } = require('./effetModel'); // Importation du modèle Effect
+const { Effect } = require('./effetModel');
 
-// Définition du schéma pour une attaque
+
 const AttackSchema = new mongoose.Schema({
     name: { type: String, required: true },
     description: { type: String, required: true },
@@ -10,10 +10,10 @@ const AttackSchema = new mongoose.Schema({
     energyCost: { type: Number, required: true },
     damage: { type: Number, required: true },
     accuracy: { type: Number, required: true },
-    effects: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Effect' }] // Référence à un modèle Effect
+    effects: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Effect' }]
 });
 
-// Création du modèle Attack
+
 const Attack = mongoose.model('Attack', AttackSchema);
 
-module.exports = Attack; // Exportation du modèle Attack
+module.exports = Attack;

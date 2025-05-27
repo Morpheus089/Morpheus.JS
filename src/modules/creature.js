@@ -1,13 +1,13 @@
 const { SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits } = require('discord.js');
 const mongoose = require('mongoose');
-const Creature = require('../database/models/creatureModel'); // Importer le modèle de creéture
-const Boss = require('../database/models/bossModel'); // Importer le modèle de boss
-const Item = require('../database/models/itemModel'); // Importer le modèle Item
-const Ressource = require('../database/models/ressourceModel'); // Importer le modèle Ressource
-const Stats = require('../database/models/statsModel'); // Importer le modèle Stats
-const Equipement = require('../database/models/equipementModel'); // Importer le modèle Equipement
-const Effect = require('../database/models/effetModel'); // Importer le modèle effet
-const Attack = require('../database/models/attaqueModel'); // Importer le modèle d'attaque
+const Creature = require('../database/models/creatureModel');
+const Boss = require('../database/models/bossModel'); 
+const Item = require('../database/models/itemModel'); 
+const Ressource = require('../database/models/ressourceModel'); 
+const Stats = require('../database/models/statsModel'); 
+const Equipement = require('../database/models/equipementModel'); 
+const Effect = require('../database/models/effetModel'); 
+const Attack = require('../database/models/attaqueModel');
 
 module.exports = {
     commands: [
@@ -95,24 +95,24 @@ module.exports = {
         const xp = interaction.options.getInteger('xp');
         const image = interaction.options.getString('image') || '';
 
-        // Parser les attaques
+        
         const attaques = attaquesInput.split('|').map(attaque => {
             const [nom, degats, precision, type] = attaque.split(',');
             return { nom, degats: parseInt(degats), precision: parseFloat(precision), type };
         });
 
-        // Parser les ressources dropées et rechercher les objets dans la base de données
+        
         const ressources = await Promise.all(dropsInput.split('|').map(async (drop) => {
             const [ressourceId, quantite_min, quantite_max, probabilite] = drop.split(',');
-            const ressource = await Ressource.findById(ressourceId); // Recherche dans la base de données
+            const ressource = await Ressource.findById(ressourceId);
             if (!ressource) throw new Error(`Ressource avec l'ID ${ressourceId} non trouvée`);
             return { ressourceId: ressource._id, quantite_min: parseInt(quantite_min), quantite_max: parseInt(quantite_max), probabilite: parseFloat(probabilite) };
         }));
 
-        // Parser les items dropés et rechercher les objets dans la base de données
+        
         const items = await Promise.all(itemsInput.split('|').map(async (item) => {
             const [itemId, probabilite] = item.split(',');
-            const foundItem = await Item.findById(itemId); // Recherche de l'item
+            const foundItem = await Item.findById(itemId); 
             if (!foundItem) throw new Error(`Item avec l'ID ${itemId} non trouvé`);
             return { itemId: foundItem._id, probabilite: parseFloat(probabilite) };
         }));
@@ -233,24 +233,24 @@ module.exports = {
         const xp = interaction.options.getInteger('xp');
         const image = interaction.options.getString('image') || '';
 
-        // Parser les attaques
+        
         const attaques = attaquesInput.split('|').map(attaque => {
             const [nom, degats, precision, type] = attaque.split(',');
             return { nom, degats: parseInt(degats), precision: parseFloat(precision), type };
         });
 
-        // Parser les ressources dropées et rechercher les objets dans la base de données
+        
         const ressources = await Promise.all(dropsInput.split('|').map(async (drop) => {
             const [ressourceId, quantite_min, quantite_max, probabilite] = drop.split(',');
-            const ressource = await Ressource.findById(ressourceId); // Recherche dans la base de données
+            const ressource = await Ressource.findById(ressourceId);
             if (!ressource) throw new Error(`Ressource avec l'ID ${ressourceId} non trouvée`);
             return { ressourceId: ressource._id, quantite_min: parseInt(quantite_min), quantite_max: parseInt(quantite_max), probabilite: parseFloat(probabilite) };
         }));
 
-        // Parser les items dropés et rechercher les objets dans la base de données
+        
         const items = await Promise.all(itemsInput.split('|').map(async (item) => {
             const [itemId, probabilite] = item.split(',');
-            const foundItem = await Item.findById(itemId); // Recherche de l'item
+            const foundItem = await Item.findById(itemId);
             if (!foundItem) throw new Error(`Item avec l'ID ${itemId} non trouvé`);
             return { itemId: foundItem._id, probabilite: parseFloat(probabilite) };
         }));
@@ -297,16 +297,16 @@ module.exports = {
                         .setRequired(true)
                 ),
             async execute(interaction) {
-                const creatureName = interaction.options.getString('nom'); // Récupérer le nom de la créature
+                const creatureName = interaction.options.getString('nom');
 
-                // Recherche de la créature dans la base de données
+            
                 const creature = await Creature.findOne({ nom: creatureName });
 
                 if (!creature) {
                     return interaction.reply(`Aucune créature trouvée avec le nom : **${creatureName}**`);
                 }
 
-                // Créer une réponse avec un embed pour afficher les détails
+                
                 const embed = new EmbedBuilder()
                     .setTitle(creature.nom)
                     .setDescription(creature.description)
@@ -317,9 +317,9 @@ module.exports = {
                         { name: 'Vitalité', value: creature.stats.vitalite.toString(), inline: true },
                         { name: 'Vitesse', value: creature.stats.vitesse.toString(), inline: true }
                     )
-                    .setColor('#FF9900'); // Choisir une couleur d'embed
+                    .setColor('#FF9900');
 
-                // Répondre à l'utilisateur avec l'embed
+                
                 await interaction.reply({ embeds: [embed] });
             }
         },
@@ -334,16 +334,16 @@ module.exports = {
                         .setRequired(true)
                 ),
             async execute(interaction) {
-                const bossName = interaction.options.getString('nom'); // Récupérer le nom du boss
+                const bossName = interaction.options.getString('nom');
 
-                // Recherche du boss dans la base de données
+                
                 const boss = await Boss.findOne({ nom: bossName });
 
                 if (!boss) {
                     return interaction.reply(`Aucun boss trouvé avec le nom : **${bossName}**`);
                 }
 
-                // Créer une réponse avec un embed pour afficher les détails
+                
                 const embed = new EmbedBuilder()
                     .setTitle(boss.nom)
                     .setDescription(boss.description)
@@ -354,9 +354,9 @@ module.exports = {
                         { name: 'Vitalité', value: boss.stats.vitalite.toString(), inline: true },
                         { name: 'Vitesse', value: boss.stats.vitesse.toString(), inline: true }
                     )
-                    .setColor('#FF0000'); // Choisir une couleur d'embed (rouge pour un boss)
+                    .setColor('#FF0000');
 
-                // Répondre à l'utilisateur avec l'embed
+                
                 await interaction.reply({ embeds: [embed] });
             }
         },
@@ -419,13 +419,13 @@ module.exports = {
         const effetNom = interaction.options.getString('effet');
 
         try {
-            // Chercher l'effet dans la base de données
+            
             const effet = await Effect.findOne({ name: effetNom });
             if (!effet) {
                 return interaction.reply({ content: `L'effet **${effetNom}** n'existe pas !`, ephemeral: true });
             }
 
-            // Création de l'attaque avec le modèle Attack
+            
             const attaque = new Attack({
                 name: nom,
                 description,
@@ -434,13 +434,13 @@ module.exports = {
                 energyCost: energie,
                 damage: degat,
                 accuracy: precision,
-                effects: [effet._id]  // Référence à l'ID de l'effet
+                effects: [effet._id]
             });
 
-            // Sauvegarder l'attaque dans la base de données
+            
             await attaque.save();
 
-            // Répondre avec un embed de succès
+            
             const embed = new EmbedBuilder()
                 .setTitle('Attaque créée')
                 .setDescription(`L'attaque **${nom}** a été ajoutée avec succès avec l'effet **${effetNom}** !`)
