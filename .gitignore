@@ -1,5 +1,7 @@
 node_modules/
 
+dashboard/node_modules/
+
 src/config/.env
 
 src/data/backups/Serveur-mere.json

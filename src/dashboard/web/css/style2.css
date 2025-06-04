@@ -1,0 +1,96 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: transparent;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #00ffff;
+}
+
+.connexion-background {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: radial-gradient(circle at center, #001f33, #000);
+    z-index: -1;
+    animation: backgroundShift 10s infinite alternate ease-in-out;
+}
+
+@keyframes backgroundShift {
+    0% { filter: brightness(1); }
+    100% { filter: brightness(1.2); }
+}
+
+.connexion-container {
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 0 30px #00ffff;
+    text-align: center;
+    animation: fadeIn 2s ease;
+    width: 90%;
+    max-width: 400px;
+}
+
+.connexion-logo {
+    width: 100px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px #00ffff;
+}
+
+.connexion-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.connexion-form h2 {
+    margin-bottom: 20px;
+    color: #00ffff;
+}
+
+.connexion-form input {
+    padding: 12px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 10px;
+    font-size: 1em;
+    background-color: #111;
+    color: #00ffff;
+    box-shadow: 0 0 10px #00ffff30 inset;
+}
+
+.connexion-form input:focus {
+    outline: none;
+    box-shadow: 0 0 15px #00ffff60 inset;
+}
+
+.connexion-form button {
+    padding: 12px;
+    background: #00ffff;
+    border: none;
+    border-radius: 10px;
+    color: #000;
+    font-size: 1em;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.3s ease;
+}
+
+.connexion-form button:hover {
+    background: #00cccc;
+}
+
+.login-message {
+    margin-top: 15px;
+    font-size: 0.9em;
+    color: #ff4444;
+    min-height: 1.2em;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
