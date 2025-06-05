@@ -15,7 +15,7 @@ const Connexion = () => {
       setLoginMessage('Connexion réussie !');
       // Exemple de redirection après 1.5s
       setTimeout(() => {
-        window.location.href = '/dashboard'; // adapte l'url à ton projet
+        window.location.href = '/home';
       }, 1500);
     } else {
       setMessageColor('#ff4444');
