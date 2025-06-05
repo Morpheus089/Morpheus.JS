@@ -9,16 +9,16 @@ const Loader = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setProgress(prev => {
-        const next = prev + 4; // avance de 4% par 200ms → ~5s total
+        const next = prev + 4;
         if (next >= 100) {
           clearInterval(interval);
           setTimeout(() => {
-            navigate('/connexion'); // redirection après 100%
-          }, 500); // petit délai de confort
+            navigate('/connexion');
+          }, 500);
         }
         return next;
       });
-    }, 200); // toutes les 200 ms
+    }, 200);
 
     return () => clearInterval(interval);
   }, [navigate]);
