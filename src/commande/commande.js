@@ -44,6 +44,13 @@ const AjouterNiveaux = require('./xp/ajouter_niveaux.js');
 const Niveau = require('./xp/niveau.js');
 const RetirerNiveaux = require('./xp/retirer_niveaux.js');
 
+const backup = require('./save_serveur/backup.js');
+const charger_backup = require('./save_serveur/charger_backup.js');
+const creer_backup = require('./save_serveur/creer_backup.js');
+const info_backup = require('./save_serveur/info_backup.js');
+const restore = require('./save_serveur/restore.js');
+const purge_all = require('./save_serveur/purge_all.js')
+
 module.exports = {
     commands: [
         ...Craft.commands,
@@ -91,5 +98,12 @@ module.exports = {
         ...AjouterNiveaux.commands,
         ...Niveau.commands,
         ...RetirerNiveaux.commands,
+
+        ...backup.commands,
+        ...charger_backup.commands,
+        ...creer_backup.commands,
+        ...info_backup.commands,
+        ...restore.commands,
+        ...purge_all.commands,
     ]
 };

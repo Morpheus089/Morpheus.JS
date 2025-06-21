@@ -39,7 +39,6 @@ const commandesModules = require(path.join(__dirname, '../commande/commande.js')
 const moderation = require(path.join(modules_modPath, 'moderation.js'));
 const building = require(path.join(modules_modPath, 'build.js'));
 const tupper = require(path.join(modules_modPath, 'tupper.js'));
-const save_serveur = require(path.join(modules_modPath, 'save_serveur.js'));
 const ticket = require(path.join(modules_modPath, 'ticket.js'));
 const help = require(path.join(modules_modPath, 'help.js'));
 
@@ -48,7 +47,6 @@ const allCommands = [
   ...moderation.commands,
   ...building.commands,
   ...tupper.commands,
-  ...save_serveur.commands,
   ...ticket.commands,
   ...help.commands,
 ];

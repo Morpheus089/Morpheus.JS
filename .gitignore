@@ -7,3 +7,5 @@ note/
 src/config/.env
 
 src/data/backups/Serveur-mere.json
+
+note/note.txt
