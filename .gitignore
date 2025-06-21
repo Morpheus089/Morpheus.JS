@@ -8,4 +8,6 @@ src/config/.env
 
 src/data/backups/Serveur-mere.json
 
+src/data/backups/serveur_op.json
+
 note/note.txt
